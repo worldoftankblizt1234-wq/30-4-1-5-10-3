@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đại Lễ Dân Tộc - Hào Khí Việt Nam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f9f6f0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .serif-font { font-family: 'Playfair Display', serif; }
+        .cursive-font { font-family: 'Dancing Script', cursive; }
+
+        /* Họa tiết trống đồng nền trang */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="%23d4a017" stroke-width="1.5" opacity="0.15"/><circle cx="100" cy="100" r="70" fill="none" stroke="%23d4a017" stroke-width="1.2" opacity="0.12"/><circle cx="100" cy="100" r="50" fill="none" stroke="%23d4a017" stroke-width="1" opacity="0.1"/><circle cx="100" cy="100" r="30" fill="none" stroke="%23d4a017" stroke-width="0.8" opacity="0.08"/><circle cx="100" cy="100" r="10" fill="%23d4a017" opacity="0.12"/><line x1="100" y1="10" x2="100" y2="22" stroke="%23d4a017" stroke-width="1.2" opacity="0.2"/><line x1="100" y1="178" x2="100" y2="190" stroke="%23d4a017" stroke-width="1.2" opacity="0.2"/><line x1="10" y1="100" x2="22" y2="100" stroke="%23d4a017" stroke-width="1.2" opacity="0.2"/><line x1="178" y1="100" x2="190" y2="100" stroke="%23d4a017" stroke-width="1.2" opacity="0.2"/><polygon points="100,25 108,45 130,45 113,58 120,80 100,68 80,80 87,58 70,45 92,45" fill="%23d4a017" opacity="0.18"/><circle cx="100" cy="100" r="15" fill="none" stroke="%23d4a017" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.15"/></svg>');
+            background-size: 220px 220px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body > * { position: relative; z-index: 1; }
+
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://files.catbox.moe/vh2gqf.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .hero-bg::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><circle cx="150" cy="150" r="140" fill="none" stroke="%23fbbf24" stroke-width="2" opacity="0.2"/><circle cx="150" cy="150" r="100" fill="none" stroke="%23fbbf24" stroke-width="1.2" opacity="0.15"/><circle cx="150" cy="150" r="60" fill="none" stroke="%23fbbf24" stroke-width="0.8" opacity="0.1"/><circle cx="150" cy="150" r="25" fill="%23fbbf24" opacity="0.15"/><polygon points="150,50 162,82 198,82 170,102 182,138 150,118 118,138 130,102 102,82 138,82" fill="%23fbbf24" opacity="0.25"/><line x1="150" y1="20" x2="150" y2="40" stroke="%23fbbf24" stroke-width="2" opacity="0.25"/><line x1="150" y1="260" x2="150" y2="280" stroke="%23fbbf24" stroke-width="2" opacity="0.25"/><line x1="20" y1="150" x2="40" y2="150" stroke="%23fbbf24" stroke-width="2" opacity="0.25"/><line x1="260" y1="150" x2="280" y2="150" stroke="%23fbbf24" stroke-width="2" opacity="0.25"/></svg>');
+            background-size: 350px 350px;
+            background-position: center;
+            background-repeat: repeat;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-bg > * { position: relative; z-index: 2; }
+
+        /* Hiệu ứng scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Các kiểu reveal khác nhau */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-80px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(80px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .reveal-rotate {
+            opacity: 0;
+            transform: rotateY(90deg);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-rotate.active {
+            opacity: 1;
+            transform: rotateY(0);
+        }
+
+        /* Delay cho từng phần tử */
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+        .delay-3 { transition-delay: 0.6s; }
+        .delay-4 { transition-delay: 0.8s; }
+
+        /* Trình bày thơ lục bát */
+        .tho-luc-bat { display: inline-block; text-align: left; }
+        .cau-luc { display: block; margin-bottom: 0.5rem; }
+        .cau-bat { display: block; padding-left: 3rem; }
+
+        /* Khung ảnh với hiệu ứng hover nâng cao */
+        .img-frame {
+            overflow: hidden;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 4px solid white;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .img-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .img-frame:hover::before {
+            left: 100%;
+        }
+
+        .img-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212,160,23,0.2), rgba(255,215,0,0.1));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .img-frame:hover::after {
+            opacity: 1;
+        }
+
+        .img-frame:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+            border-color: #d4a017;
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .img-frame:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Icon overlay khi hover ảnh */
+        .img-overlay-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 3rem;
+            color: white;
+            z-index: 3;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            text-shadow: 0 0 30px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        .img-frame:hover .img-overlay-icon {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        section { padding: 100px 0; }
+
+        .section-ornament { position: relative; }
+        .section-ornament::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23d4a017" stroke-width="1.5" opacity="0.25"/><circle cx="50" cy="50" r="25" fill="none" stroke="%23d4a017" stroke-width="0.8" opacity="0.15"/><circle cx="50" cy="50" r="12" fill="%23d4a017" opacity="0.2"/><polygon points="50,18 56,38 78,38 62,50 68,72 50,60 32,72 38,50 22,38 44,38" fill="%23d4a017" opacity="0.35"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .golden-bg { background-color: #fef9e7; position: relative; }
+        .golden-border { border: 2px solid #d4a017; box-shadow: 0 0 20px rgba(212,160,23,0.15); }
+
+        /* Hero text animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-animate {
+            animation: fadeInUp 1.2s ease forwards;
+        }
+        .hero-animate-delay { animation-delay: 0.5s; opacity: 0; }
+        .hero-animate-delay-2 { animation-delay: 1s; opacity: 0; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Hero Section -->
+    <header class="h-screen flex items-center justify-center text-center text-white hero-bg">
+        <div class="max-w-5xl px-6">
+            <h2 class="cursive-font text-3xl md:text-5xl text-yellow-400 mb-6 hero-animate">Hướng về cội nguồn dân tộc</h2>
+            <h1 class="serif-font text-6xl md:text-9xl font-black mb-8 uppercase tracking-tighter hero-animate hero-animate-delay">Đại Lễ <br>Việt Nam 2026</h1>
+            <div class="w-32 h-1 bg-yellow-500 mx-auto mb-10 hero-animate hero-animate-delay"></div>
+            <p class="text-xl md:text-2xl font-light italic text-gray-300 hero-animate hero-animate-delay-2">Tự hào dòng máu Lạc Hồng - Vững bước kỷ nguyên mới</p>
+        </div>
+    </header>
+
+    <!-- Câu Ca Dao Lục Bát -->
+    <div class="py-24 bg-white border-b border-gray-100 section-ornament">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="inline-block p-12 bg-red-50 rounded-[40px] shadow-inner relative overflow-hidden golden-border reveal-scale">
+                <i class="fas fa-dharmachakra absolute -top-10 -left-10 text-9xl text-red-100 rotate-12"></i>
+                <div class="relative z-10">
+                    <div class="tho-luc-bat serif-font text-3xl md:text-5xl font-bold text-red-800 leading-tight">
+                        <span class="cau-luc">"Dù ai đi ngược về xuôi,
+                                               Nhớ ngày dỗ tổ mùng 10/3</span>
+                        
+                    </div>
+                    <p class="text-red-500 text-sm italic mt-4 font-medium">— Ca dao Việt Nam —</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Giỗ Tổ Hùng Vương -->
+    <section id="hungvuong" class="golden-bg">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1 reveal-left">
+                    <div class="img-frame">
+                        <div class="img-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                        <img src="https://files.catbox.moe/vh2gqf.png alt"="Cổng Đền Hùng">
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-6 font-bold uppercase tracking-widest italic reveal delay-1">Cổng chính Đền Hùng - Phú Thọ</p>
+                </div>
+                <div class="order-1 lg:order-2 reveal-right">
+                    <h2 class="serif-font text-5xl font-bold mb-8 text-gray-900 leading-tight">Giỗ Tổ Hùng Vương<br><span class="text-red-600">Linh Thiêng Nguồn Cội</span></h2>
+                    <div class="text-gray-600 text-lg space-y-6 text-justify">
+                        <p class="reveal delay-1">Hôm nay, ngày mồng 10 tháng 3 năm Bính Ngọ (2026), hàng triệu người con đất Việt cùng hướng lòng về núi Nghĩa Lĩnh, tỉnh Phú Thọ. Đây là dịp để chúng ta bày tỏ lòng biết ơn vô hạn đối với các Vua Hùng đã có công dựng nước.</p>
+                        <p class="reveal delay-2">Tín ngưỡng thờ cúng Hùng Vương đã trở thành một phần máu thịt trong văn hóa Việt Nam. Nó nhắc nhở chúng ta về sức mạnh của sự đoàn kết, về ý nghĩa của hai chữ "Đồng Bào" (cùng một bọc). Dù ở bất cứ đâu trên thế giới, tâm thức hướng về nguồn cội luôn là sợi dây bền chặt nhất gắn kết dân tộc Việt Nam.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 30/4 & 1/5 -->
+    <section id="thongnhat" class="bg-gray-900 text-white overflow-hidden section-ornament">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="serif-font text-5xl md:text-7xl font-bold mb-4">Non Sông Nối Liền</h2>
+                <p class="text-yellow-400 text-2xl uppercase tracking-[0.3em]">Kỷ niệm 51 năm Ngày Thống Nhất</p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-8 text-lg font-light text-gray-300 text-justify reveal-left">
+                    <p>Ngày 30/4/1975 đã đi vào lịch sử như một bản anh hùng ca bất diệt. Hình ảnh chiếc xe tăng húc đổ cổng Dinh Độc Lập lúc 11h30 phút đã chính thức chấm dứt 21 năm chia cắt, mang lại hòa bình trọn vẹn cho dân tộc.</p>
+                    <p class="reveal delay-1">Đồng hành cùng ngày vui thống nhất là Ngày Quốc tế Lao động 1/5. Đây là lúc chúng ta tôn vinh những đôi bàn tay và khối óc đang ngày đêm kiến thiết đất nước. Từ chiến thắng quân sự đến thắng lợi trên mặt trận kinh tế, người Việt Nam luôn chứng minh được ý chí tự lực, tự cường mạnh mẽ.</p>
+                </div>
+                <div class="reveal-right">
+                    <div class="img-frame border-gray-800">
+                        <div class="img-overlay-icon"><i class="fas fa-expand"></i></div>
+                        <img src="https://files.catbox.moe/habidz.jpeg" alt="Xe tăng húc đổ cổng Dinh Độc Lập 30/4">
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-6 italic reveal delay-1">Khoảnh khắc lịch sử tại Dinh Độc Lập - 30/04/1975</p>
+                </div>66
+            </div>
+        </div>
+    </section>
+
+    <!-- Lưu ý du lịch -->
+    <section id="luuy" class="bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <div class="lg:w-1/2 reveal-left">
+                    <h2 class="serif-font text-5xl font-bold mb-10">Cẩm Nang Du Lịch <br><span class="text-red-600 underline decoration-yellow-500 decoration-4">Dịp Đại Lễ</span></h2>
+                    <div class="space-y-8">
+                        <div class="flex gap-6 items-start reveal delay-1">
+                            <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-map-pin"></i></div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1">Cảnh giác tại điểm nóng</h4>
+                                <p class="text-gray-500">Các bãi biển lớn thường xảy ra tình trạng quá tải. Hãy bảo quản tư trang cá nhân và theo dõi trẻ nhỏ liên tục trong đám đông.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 items-start reveal delay-2">
+                            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-sun"></i></div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1">Sức khỏe là trên hết</h4>
+                                <p class="text-gray-500">Nắng nóng cuối tháng 4 rất gắt. Hãy uống nhiều nước và luôn có mũ/nón bảo vệ để tránh say nắng khi tham gia lễ hội ngoài trời.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 reveal-right">
+                    <div class="img-frame">
+                        <div class="img-overlay-icon"><i class="fas fa-eye"></i></div>
+                        <img src="https://files.catbox.moe/t9uv4u.jpeg"alt="Sầm Sơn chiều 30/4">
+                    </div>
+                    <div class="mt-8 p-6 bg-yellow-50 border-r-4 border-yellow-500 text-right reveal delay-1">
+                        <p class="text-gray-700 font-medium">Trục đường chính dẫn ra bãi biển Sầm Sơn, Thanh Hóa chiều 30/4.</p>
+                        <p class="text-red-600 font-bold uppercase text-sm mt-1">Ảnh: Dương Thế Hùng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="ket" class="bg-red-800 py-20 text-center text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-40 h-40" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22none%22 stroke=%22%23fbbf24%22 stroke-width=%222%22/><circle cx=%2250%22 cy=%2250%22 r=%2230%22 fill=%22none%22 stroke=%22%23fbbf24%22 stroke-width=%221.5%22/><polygon points=%2250,20 58,42 82,42 64,56 72,80 50,68 28,80 36,56 18,42 42,42%22 fill=%22%23fbbf24%22/></svg>'); background-size: contain; background-repeat: no-repeat;"></div>
+            <div class="absolute bottom-10 right-10 w-40 h-40" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22none%22 stroke=%22%23fbbf24%22 stroke-width=%222%22/><circle cx=%2250%22 cy=%2250%22 r=%2230%22 fill=%22none%22 stroke=%22%23fbbf24%22 stroke-width=%221.5%22/><polygon points=%2250,20 58,42 82,42 64,56 72,80 50,68 28,80 36,56 18,42 42,42%22 fill=%22%23fbbf24%22/></svg>'); background-size: contain; background-repeat: no-repeat;"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <h2 class="serif-font text-4xl mb-6 reveal-scale">Việt Nam Hòa Bình - Thịnh Vượng</h2>
+            <div class="w-20 h-1 bg-yellow-400 mx-auto mb-8 reveal"></div>
+            <div class="text-xl font-light italic mb-2 opacity-80 reveal delay-1">
+                "Nước Việt Nam là một, dân tộc Việt Nam là một. Sông có thể cạn, núi có thể mòn, song chân lý đó không bao giờ thay đổi."
+            </div>
+            <p class="text-yellow-300 font-bold text-sm tracking-widest uppercase mb-10 reveal delay-2">— Chủ tịch Hồ Chí Minh, thư gửi đồng bào Nam Bộ (1946) —</p>
+            <p class="cursive-font text-4xl text-yellow-300 mb-12 reveal-scale delay-3">Chúc mừng ngày lễ Giỗ Tổ và 30/4 - 1/5!</p>
+            <p class="text-xs tracking-widest opacity-50 uppercase reveal delay-4">&copy; 2026 - TỰ HÀO DÒNG MÁU LẠC HỒNG</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript cho hiệu ứng scroll reveal -->
+    <script>
+        // Scroll Reveal
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-rotate');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Hiệu ứng parallax nhẹ cho ảnh khi di chuột
+        document.querySelectorAll('.img-frame').forEach(frame => {
+            frame.addEventListener('mousemove', (e) => {
+                const rect = frame.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                frame.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.03)`;
+            });
+
+            frame.addEventListener('mouseleave', () => {
+                frame.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+            });
+        });
+    </script>
+
+</body>
+</html>
